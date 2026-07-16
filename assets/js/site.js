@@ -92,3 +92,49 @@
     }
   });
 })();
+
+/* ---------- Slideshow / lightbox gallery (commissioned) ---------- */
+(function () {
+  'use strict';
+  var ss = document.getElementById('slideshow');
+  if (!ss) return;
+  var dataEl = document.getElementById('ss-data');
+  if (!dataEl) return;
+  var data = JSON.parse(dataEl.textContent);
+  if (!data.length) return;
+
+  var img = document.getElementById('ss-img');
+  var cur = document.getElementById('ss-cur');
+  var idx = 0;
+
+  function preload(i) {
+    var d = data[(i + data.length) % data.length];
+    if (d) { var im = new Image(); im.src = d.src; }
+  }
+  function show(i) {
+    idx = (i + data.length) % data.length;
+    img.src = data[idx].src;
+    img.alt = 'Photo ' + (idx + 1) + ' of ' + data.length;
+    cur.textContent = idx + 1;
+    preload(idx + 1); preload(idx - 1);
+  }
+
+  ss.querySelector('.ss-prev').addEventListener('click', function () { show(idx - 1); });
+  ss.querySelector('.ss-next').addEventListener('click', function () { show(idx + 1); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') { show(idx - 1); }
+    else if (e.key === 'ArrowRight') { show(idx + 1); }
+  });
+
+  // Swipe on touch devices
+  var startX = null;
+  ss.addEventListener('touchstart', function (e) { startX = e.touches[0].clientX; }, { passive: true });
+  ss.addEventListener('touchend', function (e) {
+    if (startX === null) return;
+    var dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 40) { show(idx + (dx < 0 ? 1 : -1)); }
+    startX = null;
+  }, { passive: true });
+
+  preload(1);
+})();

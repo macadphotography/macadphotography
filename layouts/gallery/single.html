@@ -6,25 +6,43 @@
 </section>
 
 {{ $images := .Resources.ByType "image" }}
-{{ if $images }}
-<div class="gallery-grid" id="gallery">
-  {{ range $i, $img := $images }}
-    {{ $thumb := $img.Fill "700x700 Center q80" }}
-    {{ $full := $img.Resize "1800x q82" }}
-    <a class="gallery-item"
-       href="{{ $full.RelPermalink }}"
-       data-full="{{ $full.RelPermalink }}"
-       data-w="{{ $full.Width }}"
-       data-h="{{ $full.Height }}"
-       data-index="{{ $i }}">
-      <img src="{{ $thumb.RelPermalink }}"
-           width="{{ $thumb.Width }}" height="{{ $thumb.Height }}"
-           loading="lazy" decoding="async"
-           alt="{{ $.Title }} — {{ add $i 1 }}">
-    </a>
+{{ if not $images }}
+  <p class="empty-note">Photos coming soon. Drop image files into <code>content/{{ .File.ContentBaseName }}/</code> to fill this gallery.</p>
+{{ else if eq .Params.gallerystyle "slideshow" }}
+  {{/* ---- Slideshow / lightbox presentation ---- */}}
+  {{ $slides := slice }}
+  {{ range $images }}
+    {{ $full := .Resize "2000x q82" }}
+    {{ $slides = $slides | append (dict "src" $full.RelPermalink "w" $full.Width "h" $full.Height) }}
   {{ end }}
-</div>
+  <div class="slideshow" id="slideshow" data-count="{{ len $slides }}">
+    <button class="ss-btn ss-prev" aria-label="Previous photo">&#8249;</button>
+    <div class="ss-stage">
+      {{ $first := index $slides 0 }}
+      <img id="ss-img" src="{{ $first.src }}" width="{{ $first.w }}" height="{{ $first.h }}" alt="{{ .Title }} — 1" decoding="async">
+    </div>
+    <button class="ss-btn ss-next" aria-label="Next photo">&#8250;</button>
+    <p class="ss-count"><span id="ss-cur">1</span> / {{ len $slides }}</p>
+    <script type="application/json" id="ss-data">{{ $slides | jsonify }}</script>
+  </div>
 {{ else }}
-<p class="empty-note">Photos coming soon. Drop image files into <code>content/{{ .File.ContentBaseName }}/</code> to fill this gallery.</p>
+  {{/* ---- Grid presentation (click to open lightbox) ---- */}}
+  <div class="gallery-grid" id="gallery">
+    {{ range $i, $img := $images }}
+      {{ $thumb := $img.Fill "700x700 Center q80" }}
+      {{ $full := $img.Resize "1800x q82" }}
+      <a class="gallery-item"
+         href="{{ $full.RelPermalink }}"
+         data-full="{{ $full.RelPermalink }}"
+         data-w="{{ $full.Width }}"
+         data-h="{{ $full.Height }}"
+         data-index="{{ $i }}">
+        <img src="{{ $thumb.RelPermalink }}"
+             width="{{ $thumb.Width }}" height="{{ $thumb.Height }}"
+             loading="lazy" decoding="async"
+             alt="{{ $.Title }} — {{ add $i 1 }}">
+      </a>
+    {{ end }}
+  </div>
 {{ end }}
 {{ end }}

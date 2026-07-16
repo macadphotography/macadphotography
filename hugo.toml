@@ -26,66 +26,46 @@ disableKinds = ["taxonomy", "term"]
   facebook = "https://www.facebook.com/macadphotography"
   instagram = "https://www.instagram.com/macadphotography/"
 
-# ---- Navigation menu (with Personal / Commissioned dropdowns) ----
+# ---- Navigation menu (flat, street-first) ----
 [menus]
-  [[menus.main]]
-    identifier = "wedding"
-    name = "Wedding"
-    pageRef = "/wedding"
-    weight = 10
-
-  [[menus.main]]
-    identifier = "personal"
-    name = "Personal"
-    weight = 20
   [[menus.main]]
     name = "Street"
     pageRef = "/street"
-    parent = "personal"
-    weight = 21
-  [[menus.main]]
-    name = "Travel"
-    pageRef = "/travel"
-    parent = "personal"
-    weight = 22
-  [[menus.main]]
-    name = "Food"
-    pageRef = "/food"
-    parent = "personal"
-    weight = 23
-
-  [[menus.main]]
-    identifier = "commissioned"
-    name = "Commissioned"
-    weight = 30
-  [[menus.main]]
-    name = "SG50"
-    pageRef = "/sg50"
-    parent = "commissioned"
-    weight = 31
+    weight = 10
   [[menus.main]]
     name = "Portraits"
     pageRef = "/portraits"
-    parent = "commissioned"
-    weight = 32
+    weight = 20
+  [[menus.main]]
+    name = "Travel"
+    pageRef = "/travel"
+    weight = 30
+  [[menus.main]]
+    name = "Food"
+    pageRef = "/food"
+    weight = 40
+  [[menus.main]]
+    name = "Weddings"
+    pageRef = "/wedding"
+    weight = 50
+  [[menus.main]]
+    name = "SG50"
+    pageRef = "/sg50"
+    weight = 60
 
   [[menus.main]]
     identifier = "essays"
     name = "Essays"
     pageRef = "/essays"
-    weight = 40
-
+    weight = 70
   [[menus.main]]
-    identifier = "about"
     name = "About"
     pageRef = "/about"
-    weight = 60
-
+    weight = 80
   [[menus.main]]
-    identifier = "contact"
     name = "Contact"
     pageRef = "/contact"
-    weight = 70
+    weight = 90
 
 [markup]
   [markup.goldmark.renderer]

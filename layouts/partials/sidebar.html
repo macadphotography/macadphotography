@@ -1,0 +1,27 @@
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="sidebar">
+  <div class="sidebar-inner">
+    <a class="brand" href="{{ site.Home.RelPermalink }}">
+      <span class="brand-name">Macad Photography</span>
+      <span class="brand-tagline">{{ .Site.Params.tagline }}</span>
+    </a>
+
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav id="site-nav" class="main-nav" aria-label="Primary">
+      <ul class="nav-list">
+        {{ range .Site.Menus.main }}
+          <li class="nav-item{{ if eq .Identifier "essays" }} nav-sep{{ end }}">
+            <a href="{{ .URL }}"{{ if $.IsMenuCurrent "main" . }} class="active" aria-current="page"{{ end }}>{{ .Name }}</a>
+          </li>
+        {{ end }}
+      </ul>
+      <div class="nav-social">
+        <a href="{{ .Site.Params.facebook }}" aria-label="Facebook" rel="noopener" target="_blank">{{ partial "icon-facebook.html" . }}</a>
+        <a href="{{ .Site.Params.instagram }}" aria-label="Instagram" rel="noopener" target="_blank">{{ partial "icon-instagram.html" . }}</a>
+      </div>
+    </nav>
+  </div>
+</header>
