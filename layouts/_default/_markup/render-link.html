@@ -1,0 +1,11 @@
+{{- $dest := .Destination -}}
+{{- $u := urls.Parse $dest -}}
+{{- /* Resolve root-relative internal links (e.g. /contact/) to the page's
+       RelPermalink so they carry any base path (project sub-path or custom
+       domain). External, mailto/tel, and anchor links pass through unchanged. */ -}}
+{{- if and (not $u.IsAbs) (hasPrefix $dest "/") -}}
+  {{- with site.GetPage (strings.TrimSuffix "/" $dest) -}}
+    {{- $dest = .RelPermalink -}}
+  {{- end -}}
+{{- end -}}
+<a href="{{ $dest | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $u.IsAbs }} rel="noopener" target="_blank"{{ end }}>{{ .Text | safeHTML }}</a>

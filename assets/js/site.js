@@ -30,6 +30,10 @@
 
   var box = document.createElement('div');
   box.className = 'lb';
+  box.setAttribute('role', 'dialog');
+  box.setAttribute('aria-modal', 'true');
+  box.setAttribute('aria-label', 'Image viewer');
+  box.setAttribute('tabindex', '-1');
   box.innerHTML =
     '<button class="lb-btn lb-close" aria-label="Close">&times;</button>' +
     '<button class="lb-btn lb-prev" aria-label="Previous">&#8249;</button>' +
@@ -40,7 +44,10 @@
 
   var lbImg = box.querySelector('img');
   var lbCount = box.querySelector('.lb-count');
+  var closeBtn = box.querySelector('.lb-close');
+  var focusable = [box.querySelector('.lb-prev'), box.querySelector('.lb-next'), closeBtn];
   var current = 0;
+  var lastFocused = null;
 
   function show(i) {
     current = (i + items.length) % items.length;
@@ -49,20 +56,39 @@
     lbImg.alt = el.querySelector('img') ? el.querySelector('img').alt : '';
     lbCount.textContent = (current + 1) + ' / ' + items.length;
   }
-  function open(i) { show(i); box.classList.add('open'); document.body.style.overflow = 'hidden'; }
-  function close() { box.classList.remove('open'); document.body.style.overflow = ''; }
+  function open(i) {
+    lastFocused = document.activeElement;
+    show(i);
+    box.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+  function close() {
+    box.classList.remove('open');
+    document.body.style.overflow = '';
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }
 
   items.forEach(function (el, i) {
     el.addEventListener('click', function (e) { e.preventDefault(); open(i); });
   });
-  box.querySelector('.lb-close').addEventListener('click', close);
+  closeBtn.addEventListener('click', close);
   box.querySelector('.lb-prev').addEventListener('click', function (e) { e.stopPropagation(); show(current - 1); });
   box.querySelector('.lb-next').addEventListener('click', function (e) { e.stopPropagation(); show(current + 1); });
   box.addEventListener('click', function (e) { if (e.target === box) close(); });
   document.addEventListener('keydown', function (e) {
     if (!box.classList.contains('open')) return;
-    if (e.key === 'Escape') close();
-    else if (e.key === 'ArrowLeft') show(current - 1);
-    else if (e.key === 'ArrowRight') show(current + 1);
+    if (e.key === 'Escape') { close(); }
+    else if (e.key === 'ArrowLeft') { show(current - 1); }
+    else if (e.key === 'ArrowRight') { show(current + 1); }
+    else if (e.key === 'Tab') {
+      // Trap focus within the dialog
+      var idx = focusable.indexOf(document.activeElement);
+      if (idx === -1) { e.preventDefault(); focusable[0].focus(); return; }
+      e.preventDefault();
+      var next = e.shiftKey ? idx - 1 : idx + 1;
+      next = (next + focusable.length) % focusable.length;
+      focusable[next].focus();
+    }
   });
 })();
