@@ -76,12 +76,6 @@ disableKinds = ["taxonomy", "term"]
     weight = 40
 
   [[menus.main]]
-    identifier = "packages"
-    name = "Packages"
-    pageRef = "/packages"
-    weight = 50
-
-  [[menus.main]]
     identifier = "about"
     name = "About"
     pageRef = "/about"

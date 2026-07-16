@@ -52,7 +52,7 @@ See `content/essays/a-morning-in-the-city/` for a working example.
 ### 3. Edit page text
 
 The wording on About, Gear, Packages, Contact, etc. lives in plain Markdown
-files in `content/` (`about.md`, `gear.md`, `packages.md`, `contact.md`). Edit
+files in `content/` (`about.md`, `gear.md`, `contact.md`). Edit
 the text, save, publish.
 
 ---
