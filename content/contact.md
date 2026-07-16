@@ -1,6 +1,5 @@
 ---
-title: "Photographer"
-subtitle: "Contact"
+title: "Get in Touch"
 ---
 
 <div class="contact-block">

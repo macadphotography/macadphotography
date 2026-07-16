@@ -4,6 +4,12 @@
     <h1 class="splash-title">Macad Photography</h1>
     <p class="splash-tagline">Wedding, Portraiture, Street, Food</p>
     <a class="btn-enter" href="{{ (site.GetPage "/wedding").RelPermalink }}">Enter Gallery</a>
+    <nav class="splash-nav" aria-label="Site">
+      <a href="{{ (site.GetPage "/essays").RelPermalink }}">Essays</a>
+      <a href="{{ (site.GetPage "/packages").RelPermalink }}">Packages</a>
+      <a href="{{ (site.GetPage "/about").RelPermalink }}">About</a>
+      <a href="{{ (site.GetPage "/contact").RelPermalink }}">Contact</a>
+    </nav>
   </div>
   <div class="splash-social">
     <a href="{{ .Site.Params.facebook }}" aria-label="Facebook" rel="noopener" target="_blank">{{ partial "icon-facebook.html" . }}</a>
