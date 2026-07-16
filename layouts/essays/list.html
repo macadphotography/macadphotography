@@ -1,0 +1,30 @@
+{{ define "main" }}
+<section class="page-head">
+  <h1>{{ .Title }}</h1>
+  {{ with .Content }}<div class="page-copy">{{ . }}</div>{{ end }}
+</section>
+
+<div class="essay-list">
+  {{ range .Pages.ByDate.Reverse }}
+    {{ $p := . }}
+    {{ $cover := "" }}
+    {{ with $p.Params.cover }}{{ $cover = $p.Resources.GetMatch . }}{{ end }}
+    {{ if not $cover }}
+      {{ with $p.Resources.ByType "image" }}{{ $cover = index . 0 }}{{ end }}
+    {{ end }}
+    <article class="essay-card">
+      <a class="essay-card-link" href="{{ $p.RelPermalink }}">
+        {{ with $cover }}
+          {{ $c := .Fill "1200x800 Center q80" }}
+          <div class="essay-cover"><img src="{{ $c.RelPermalink }}" width="{{ $c.Width }}" height="{{ $c.Height }}" loading="lazy" alt="{{ $p.Title }}"></div>
+        {{ end }}
+        <div class="essay-card-body">
+          <h2>{{ $p.Title }}</h2>
+          <p class="essay-date">{{ $p.Date.Format "January 2, 2006" }}</p>
+          <p class="essay-summary">{{ with $p.Params.summary }}{{ . }}{{ else }}{{ $p.Summary }}{{ end }}</p>
+        </div>
+      </a>
+    </article>
+  {{ end }}
+</div>
+{{ end }}

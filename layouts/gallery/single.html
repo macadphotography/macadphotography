@@ -1,0 +1,30 @@
+{{ define "main" }}
+<section class="page-head">
+  <h1>{{ .Title }}</h1>
+  {{ with .Params.subtitle }}<p class="page-subtitle">{{ . }}</p>{{ end }}
+  {{ with .Content }}<div class="page-copy">{{ . }}</div>{{ end }}
+</section>
+
+{{ $images := .Resources.ByType "image" }}
+{{ if $images }}
+<div class="gallery-grid" id="gallery">
+  {{ range $i, $img := $images }}
+    {{ $thumb := $img.Fill "700x700 Center q80" }}
+    {{ $full := $img.Resize "1800x q82" }}
+    <a class="gallery-item"
+       href="{{ $full.RelPermalink }}"
+       data-full="{{ $full.RelPermalink }}"
+       data-w="{{ $full.Width }}"
+       data-h="{{ $full.Height }}"
+       data-index="{{ $i }}">
+      <img src="{{ $thumb.RelPermalink }}"
+           width="{{ $thumb.Width }}" height="{{ $thumb.Height }}"
+           loading="lazy" decoding="async"
+           alt="{{ $.Title }} — {{ add $i 1 }}">
+    </a>
+  {{ end }}
+</div>
+{{ else }}
+<p class="empty-note">Photos coming soon. Drop image files into <code>content/{{ .File.ContentBaseName }}/</code> to fill this gallery.</p>
+{{ end }}
+{{ end }}

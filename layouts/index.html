@@ -1,0 +1,13 @@
+{{ define "main" }}
+<section class="splash">
+  <div class="splash-inner">
+    <h1 class="splash-title">Macad Photography</h1>
+    <p class="splash-tagline">Wedding, Portraiture, Street, Food</p>
+    <a class="btn-enter" href="{{ "/wedding/" | relURL }}">Enter Gallery</a>
+  </div>
+  <div class="splash-social">
+    <a href="{{ .Site.Params.facebook }}" aria-label="Facebook" rel="noopener" target="_blank">{{ partial "icon-facebook.html" . }}</a>
+    <a href="{{ .Site.Params.instagram }}" aria-label="Instagram" rel="noopener" target="_blank">{{ partial "icon-instagram.html" . }}</a>
+  </div>
+</section>
+{{ end }}

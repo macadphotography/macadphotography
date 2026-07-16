@@ -1,0 +1,98 @@
+# Macad Photography — Hugo site configuration
+baseURL = "https://macadphotography.com/"
+locale = "en-us"
+title = "Macad Photography"
+enableRobotsTXT = true
+enableGitInfo = false
+disableKinds = ["taxonomy", "term"]
+
+# Pretty URLs and clean output
+[permalinks]
+  essays = "/essays/:slug/"
+
+[imaging]
+  quality = 82
+  resampleFilter = "Lanczos"
+  [imaging.exif]
+    disableDate = true
+    disableLatLong = true
+
+[params]
+  tagline = "Memories in a Nutshell"
+  description = "Wedding, portraiture, street and food photography by Jon Teo — Macad Photography."
+  email = "jon@macadphotography.com"
+  phoneSG = "+65 9101 9900"
+  phoneUS = "+1 (617) 682 6200"
+  facebook = "https://www.facebook.com/macadphotography"
+  instagram = "https://www.instagram.com/macadphotography/"
+
+# ---- Navigation menu (with Personal / Commissioned dropdowns) ----
+[menus]
+  [[menus.main]]
+    identifier = "wedding"
+    name = "Wedding"
+    pageRef = "/wedding"
+    weight = 10
+
+  [[menus.main]]
+    identifier = "personal"
+    name = "Personal"
+    weight = 20
+  [[menus.main]]
+    name = "Street"
+    pageRef = "/street"
+    parent = "personal"
+    weight = 21
+  [[menus.main]]
+    name = "Travel"
+    pageRef = "/travel"
+    parent = "personal"
+    weight = 22
+  [[menus.main]]
+    name = "Food"
+    pageRef = "/food"
+    parent = "personal"
+    weight = 23
+
+  [[menus.main]]
+    identifier = "commissioned"
+    name = "Commissioned"
+    weight = 30
+  [[menus.main]]
+    name = "SG50"
+    pageRef = "/sg50"
+    parent = "commissioned"
+    weight = 31
+  [[menus.main]]
+    name = "Portraits"
+    pageRef = "/portraits"
+    parent = "commissioned"
+    weight = 32
+
+  [[menus.main]]
+    identifier = "essays"
+    name = "Essays"
+    pageRef = "/essays"
+    weight = 40
+
+  [[menus.main]]
+    identifier = "packages"
+    name = "Packages"
+    pageRef = "/packages"
+    weight = 50
+
+  [[menus.main]]
+    identifier = "about"
+    name = "About"
+    pageRef = "/about"
+    weight = 60
+
+  [[menus.main]]
+    identifier = "contact"
+    name = "Contact"
+    pageRef = "/contact"
+    weight = 70
+
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = true

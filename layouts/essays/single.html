@@ -1,0 +1,15 @@
+{{ define "main" }}
+<article class="essay prose">
+  <header class="essay-head">
+    <h1>{{ .Title }}</h1>
+    <p class="essay-date">{{ .Date.Format "January 2, 2006" }}</p>
+    {{ with .Params.summary }}<p class="essay-lede">{{ . }}</p>{{ end }}
+  </header>
+  <div class="page-copy">
+    {{ .Content }}
+  </div>
+  <footer class="essay-foot">
+    <a href="{{ "/essays/" | relURL }}">&larr; All essays</a>
+  </footer>
+</article>
+{{ end }}

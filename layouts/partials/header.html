@@ -1,0 +1,37 @@
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="{{ "/" | relURL }}">
+      <span class="brand-name">Macad Photography</span>
+      <span class="brand-tagline">{{ .Site.Params.tagline }}</span>
+    </a>
+
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="main-nav" aria-label="Primary">
+      <ul class="nav-list">
+        {{ range .Site.Menus.main }}
+          {{ if .HasChildren }}
+            <li class="nav-item has-children">
+              <button class="nav-parent" aria-expanded="false">{{ .Name }}</button>
+              <ul class="submenu">
+                {{ range .Children }}
+                  <li><a href="{{ .URL }}"{{ if $.IsMenuCurrent "main" . }} class="active"{{ end }}>{{ .Name }}</a></li>
+                {{ end }}
+              </ul>
+            </li>
+          {{ else }}
+            <li class="nav-item">
+              <a href="{{ .URL }}"{{ if $.IsMenuCurrent "main" . }} class="active"{{ end }}>{{ .Name }}</a>
+            </li>
+          {{ end }}
+        {{ end }}
+      </ul>
+      <div class="nav-social">
+        <a href="{{ .Site.Params.facebook }}" aria-label="Facebook" rel="noopener" target="_blank">{{ partial "icon-facebook.html" . }}</a>
+        <a href="{{ .Site.Params.instagram }}" aria-label="Instagram" rel="noopener" target="_blank">{{ partial "icon-instagram.html" . }}</a>
+      </div>
+    </nav>
+  </div>
+</header>

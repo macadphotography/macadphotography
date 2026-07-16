@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body class="{{ if .IsHome }}is-home{{ end }}">
+  {{ if not .IsHome }}{{ partial "header.html" . }}{{ end }}
+  <main id="content">
+    {{ block "main" . }}{{ end }}
+  </main>
+  {{ if not .IsHome }}{{ partial "footer.html" . }}{{ end }}
+  {{ partial "scripts.html" . }}
+</body>
+</html>
